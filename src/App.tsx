@@ -19,9 +19,8 @@ export const App = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [tableData, setTableData] = useState<TRelativesTableData[]>([]);
-  const [responseData, setResponseData] = useState<string>('');
-  const [fileName, setFileName] = useState('');
   const [restFileData, setRestFileData] = useState('');
+  const [responseData, setResponseData] = useState<string>('');
   const [session, setSession] = useState<any>();
 
   useEffect(() => {
@@ -87,8 +86,7 @@ export const App = () => {
     setResponseData('');
   };
 
-  const handleFileLoad = (name: string, fileData: string) => {
-    setFileName(name);
+  const handleFileLoad = (fileData: string) => {
     consultPrologSession(fileData);
 
     const rows = fileData.split('\r\n').filter((row) => row !== '' && !row.startsWith('%'));
@@ -118,12 +116,8 @@ export const App = () => {
     const newFileData = convertDataToProlog();
     consultPrologSession(newFileData);
 
-    const file = new File([newFileData], fileName, { type: 'text/plain;charset=utf-8' });
+    const file = new File([newFileData], 'new_file.pl', { type: 'text/plain;charset=utf-8' });
     FileSaver.saveAs(file);
-  };
-
-  const handleRemoveFile = () => {
-    setFileName('');
   };
 
   const handleAddItem = (item: TRelativesTableData) => {
@@ -148,12 +142,7 @@ export const App = () => {
         <div className="mainContainer">
           <div className="header">
             <Typography.Title>Ларбораторная работа №3. Пролог</Typography.Title>
-            <FileMenu
-              onFileLoad={handleFileLoad}
-              onSave={handleSaveFile}
-              onRemove={handleRemoveFile}
-              isSaveDisabled={!fileName}
-            />
+            <FileMenu onFileLoad={handleFileLoad} onSave={handleSaveFile} />
           </div>
           <RelativesTable
             data={tableData}

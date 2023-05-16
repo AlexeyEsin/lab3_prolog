@@ -54,14 +54,6 @@ father("владислав_герасимов", "михаил_герасимов
 mother("наталья_герасимова", "михаил_герасимов").
 sister("марина_кузнецова", "михаил_герасимов").
 
-
-
-brother("1", "2").
-sister("2", "3").
-brother("3", "4").
-sister("4", "5").
-
-
 /* rules */
 
 is_brother(B, X) :- brother(B, X); brother(B, Y), (is_brother(Y, X); is_sister(Y, X)).
@@ -72,13 +64,13 @@ is_father(F, C) :- father(F, C); (father(F, X), is_sibling(X, C)).
 is_mother(F, C) :- mother(F, C); (mother(F, X), is_sibling(X, C)).
 
 is_parent(P, C) :- is_father(P, C); is_mother(P, C).
-is_child(C, P) :- is_father(P, C); is_mother(P, C).
+is_child(C, P) :- is_parent(P, C).
 
 is_grandfather(F, C) :- is_father(F, X), is_parent(X, C).
 is_grandmother(M, C) :- is_mother(M, X), is_parent(X, C).
 
-is_uncle(U, C) :- brother(U, X), is_parent(X, C).
-is_aunt(A, C) :- sister(A, X), is_parent(X, C).
+is_uncle(U, C) :- is_brother(U, X), is_parent(X, C).
+is_aunt(A, C) :- is_sister(A, X), is_parent(X, C).
 
 is_spouse(S, X) :- is_parent(S, Y), is_parent(X, Y).
 is_close_family(F, X) :- is_parent(F, X); is_child(F, X); is_sibling(F, X).
