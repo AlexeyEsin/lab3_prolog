@@ -1,0 +1,73 @@
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.mainContainer {
+  padding: 30px 30px 0 30px;
+  height: 100vh;
+
+  .selectedItems {
+    margin-left: 15px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    .fileMenu {
+      padding: 10px;
+      border: 1px solid lightgray;
+      border-radius: 10px;
+      width: 250px;
+      height: 120px;
+
+      .buttons {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  .tableContainer {
+    margin-top: 15px;
+
+    .relativesTable {
+      margin-top: 15px;
+    }
+  }
+
+  .addItemForm {
+    margin-top: 15px;
+  }
+
+  .responseAndQueries {
+    display: flex;
+    margin-top: 40px;
+    column-gap: 100px;
+
+    .responseArea {
+      flex: 0 1 50%;
+
+      .textArea {
+        resize: none;
+      }
+
+      .clearButton {
+        margin-top: 15px;
+      }
+    }
+
+    .queryForm {
+      .customQuery {
+        display: flex;
+        column-gap: 10px;
+
+        .input {
+          flex: 1 1 200px;
+        }
+      }
+    }
+  }
+}
