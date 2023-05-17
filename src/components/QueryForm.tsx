@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button, Form, Input, Space } from 'antd';
+import { Button, Form, Input } from 'antd';
 
 import { TQueryForm } from 'types/types';
 
@@ -12,7 +12,7 @@ export const QueryForm: FC<TQueryFormProps> = ({ onSendQuery }) => {
   const query = Form.useWatch('query', form);
 
   const grandfathersQuery = 'is_grandfather(X, "сергей_иванов").';
-  const relativesQuery = 'is_relative("роман_сольвьёв", "илья_иванов").';
+  const relativesQuery = 'is_relative("роман_соловьёв", "илья_иванов").';
   const spousesQuery = 'is_spouse("алексей_сидоров", "дарья_сидорова").';
 
   return (

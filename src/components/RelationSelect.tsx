@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Select, SelectProps } from 'antd';
 
-import { realtionMap } from 'utils';
+import { relationMap } from 'utils';
 import { TRelation } from 'types/types';
 
 type TSelectOption = {
@@ -9,25 +9,18 @@ type TSelectOption = {
   label: string;
 };
 
-const selectOptions: TSelectOption[] = Object.entries(realtionMap).map(([key, value]) => ({
+const selectOptions: TSelectOption[] = Object.entries(relationMap).map(([key, value]) => ({
   value: key as TRelation,
   label: value,
 }));
 
-type TRelationSelectProps = {
-  value?: TRelation;
-  onChange?: (newValue: TRelation) => void;
-};
-
-export const RelationSelect: FC<TRelationSelectProps & SelectProps> = ({ onChange, value, ...props }) => {
-  return (
-    <Select
-      {...props}
-      value={value}
-      defaultValue="mother"
-      style={{ width: 120 }}
-      onChange={onChange}
-      options={selectOptions}
-    />
-  );
-};
+export const RelationSelect: FC<SelectProps> = ({ value, onChange, ...props }) => (
+  <Select
+    {...props}
+    value={value}
+    defaultValue="mother"
+    style={{ width: 120 }}
+    onChange={onChange}
+    options={selectOptions}
+  />
+);

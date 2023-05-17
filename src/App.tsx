@@ -6,11 +6,12 @@ import FileSaver from 'file-saver';
 import { TRelation, TRelativesTableData } from 'types/types';
 import { FileMenu } from 'components/FileMenu';
 import { RelativesTable } from 'components/RelativesTable';
-import { ResponseArea } from 'components/ResponseArea';
 import { AddItemForm } from 'components/AddItemForm';
+import { ResponseArea } from 'components/ResponseArea';
+import { QueryForm } from 'components/QueryForm';
 import { RULES_STRING, dataToProlog, prologToData } from 'utils';
-import { QueryForm } from 'components/RequestForm';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const pl = require('tau-prolog');
 
 const { Content } = Layout;
@@ -21,6 +22,7 @@ export const App = () => {
   const [tableData, setTableData] = useState<TRelativesTableData[]>([]);
   const [restFileData, setRestFileData] = useState('');
   const [responseData, setResponseData] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [session, setSession] = useState<any>();
 
   useEffect(() => {
@@ -28,9 +30,8 @@ export const App = () => {
     setSession(prologSession);
   }, []);
 
-  const showError = (error: Error, message: string) => {
-    messageApi.open({ type: 'error', content: message });
-    console.error(error);
+  const showError = (error: Error, errorMessage: string) => {
+    messageApi.open({ type: 'error', content: errorMessage });
   };
 
   const showAnswer = (answer: string | false) => {
@@ -53,10 +54,8 @@ export const App = () => {
   };
 
   const convertDataToProlog = () => {
-    let newFileData = '';
-    tableData.forEach((item) => (newFileData += `${dataToProlog(item)}\r\n`));
+    let newFileData = tableData.reduce((acc, item) => `${acc}${dataToProlog(item)}\r\n`, '');
     newFileData += `\r\n${restFileData}`;
-
     return newFileData;
   };
 
@@ -91,7 +90,7 @@ export const App = () => {
 
     const rows = fileData.split('\r\n').filter((row) => row !== '' && !row.startsWith('%'));
     const parsedData: TRelativesTableData[] = [];
-    let restData: string = '';
+    let restData = '';
 
     let recordsExhausted = false;
     for (let i = 0; i < rows.length; i++) {

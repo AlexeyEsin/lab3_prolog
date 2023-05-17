@@ -4,7 +4,7 @@ import { TRelation, TRelativesTableData } from 'types/types';
 
 export const RULES_STRING = '/* rules */';
 
-export const realtionMap: Record<TRelation, string> = {
+export const relationMap: Record<TRelation, string> = {
   mother: 'мать',
   father: 'отец',
   sister: 'сестра',
@@ -12,7 +12,7 @@ export const realtionMap: Record<TRelation, string> = {
 };
 
 export const prologToData = (row: string): TRelativesTableData => {
-  const splitted = row.split(/[\(\)]/g);
+  const splitted = row.split(/[()]/g);
   const relation = splitted[0] as TRelation;
   const relatives = splitted[1];
 
@@ -23,6 +23,4 @@ export const prologToData = (row: string): TRelativesTableData => {
   return { key: uuidv4(), name, relation, relativeName };
 };
 
-export const dataToProlog = (data: TRelativesTableData) => {
-  return `${data.relation}("${data.name}", "${data.relativeName}").`;
-};
+export const dataToProlog = (data: TRelativesTableData) => `${data.relation}("${data.name}", "${data.relativeName}").`;
